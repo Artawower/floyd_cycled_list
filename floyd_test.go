@@ -1,28 +1,44 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIsCycling(t *testing.T) {
-	l := &List{}
-	l.Add(1)
-	l.Add(2)
-	l.Add(3)
-	l.Add(4)
-	l.Add(5)
-	l.firstNode.next.next = l.firstNode.next
+func TestListIsLooped(t *testing.T) {
+	l := NewList()
 
-	assert.True(t, isCycledList(l), "List should be cycled")
-}
-
-func TestIsNotCycling(t *testing.T) {
-	l := &List{}
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 15; i++ {
 		l.Add(i)
 	}
-	// assert.False(t, isCycledList(l), "List should not be cycled")
-	assert.False(t, isCycledList(l), "List should not be cycled")
+
+	fmt.Println(l)
+	l.firstNode.next.next = l.firstNode
+
+	assert.True(t, IsListLooped(l), "List should be looped")
+}
+
+func TestListIsNotLooped(t *testing.T) {
+	l := NewList()
+
+	for i := 0; i < 30; i++ {
+		l.Add(i)
+	}
+
+	assert.False(t, IsListLooped(l), "List shouldn't be looped")
+}
+
+func TestEmptyListIsNotLooped(t *testing.T) {
+	l := NewList()
+
+	assert.False(t, IsListLooped(l), "Empty list shouldn't be looped")
+}
+
+func TestListWithOneElementIsNotLooped(t *testing.T) {
+	l := NewList()
+	l.Add(42)
+
+	assert.False(t, IsListLooped(l), "List with one element shouldn't be looped")
 }

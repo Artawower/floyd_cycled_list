@@ -41,7 +41,7 @@ func (l *List) String() string {
 }
 
 // Функция определения зацикленности списка алгоритмом Флойда
-func isCycledList(l *List) bool {
+func IsListLooped(l *List) bool {
 	// Если текущая node nil либо следующая за ней nil
 	if l.firstNode == nil || l.firstNode.next == nil {
 		// список не зациклен
@@ -55,7 +55,7 @@ func isCycledList(l *List) bool {
 	hareNode := l.firstNode.next
 
 	// До тех пор пока переменная +1 итерации не равна nil выполняем:
-	for turtleNode != nil {
+	for {
 		// если указатель первой переменной равен указателю 2 переменной:
 		if turtleNode == hareNode {
 			// список является зацикленным
@@ -83,5 +83,5 @@ func main() {
 	l.Add(4)
 	l.Add(5)
 	l.firstNode.next.next = l.firstNode.next
-	fmt.Println(isCycledList(l))
+	fmt.Println(IsListLooped(l))
 }
