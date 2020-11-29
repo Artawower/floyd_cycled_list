@@ -36,9 +36,18 @@ func TestEmptyListIsNotLooped(t *testing.T) {
 	assert.False(t, IsListLooped(l), "Empty list shouldn't be looped")
 }
 
-func TestListWithOneElementIsNotLooped(t *testing.T) {
+func TestListWithOneElemIsLooped(t *testing.T) {
+
 	l := NewList()
 	l.Add(42)
 
-	assert.False(t, IsListLooped(l), "List with one element shouldn't be looped")
+	l.firstNode.next = l.firstNode
+
+	assert.True(t, IsListLooped(l), "List with one elem should be looped")
+}
+
+func TestListWithOneElemIsNotLooped(t *testing.T) {
+	l := NewList()
+	l.Add(42)
+	assert.False(t, IsListLooped(l), "List with one elem shouldn't be looped")
 }
